@@ -44,7 +44,7 @@ func (s *Tester) Judge() (bool, error) {
 		return false, err
 	}
 
-	fp, _ := os.Open("./"+ s.filename)
+	fp, _ := os.Open("./"+ s.filename + "_out")
 	defer fp.Close()
 	r := bufio.NewReader(fp)
 	rb, err := ioutil.ReadAll(r)
