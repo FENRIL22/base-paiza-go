@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"bufio"
 	"io/ioutil"
+	"fmt"
 	//"strings"
 )
 
@@ -78,25 +79,25 @@ func (s *Tester) Debug() (string, string, error) {
 
 
 func TestQuestion(t *testing.T){
-	debuging := false
-	s := NewTester("1.dat")
+	testCount := 2
+	for i:=0; i<testCount; i++ {
+		s := NewTester(fmt.Sprintf("%v.dat", i))
 
-	if debuging {
 		test, label, err := s.Debug()
+		t.Log(fmt.Sprintf("-- Run Test: %v ---------------", i))
 		t.Log("TEST:\n" + test)
 		t.Log("LABL:\n" + label)
 		if err != nil {
 			t.Fatal(err)
 		}
-	}
 
-	jg, err := s.Judge()
-	t.Log("JUDGE:" , jg)
-	if err != nil {
-		t.Fatal(err)
+		jg, err := s.Judge()
+		t.Log("JUDGE:" , jg)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !jg {
+			t.Error("Invalid Ans")
+		}
 	}
-	if !jg {
-		t.Error("Invalid Ans")
-	}
-	//t.Error()
 }
